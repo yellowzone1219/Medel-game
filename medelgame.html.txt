@@ -35,7 +35,7 @@
 <body>
     <div id="page1">
         <h1>孟德爾的豌豆遺傳實驗</h1>
-        <p>請點選圖片，獲取遺傳因子</p>
+        <p>請點選圖片，得到遺傳因子</p>
         <h2>純品系親代</h2>
         <div>
             <img src="https://imgur.com/O2neqrm.png" alt="綠色豌豆豆莢" class="pea-image" onclick="selectFactor('G', this, 'page1-factor')">
@@ -49,7 +49,7 @@
 
     <div id="page2" style="display: none;">
         <h1>孟德爾的豌豆遺傳實驗</h1>
-        <p>請點選圖片，獲取遺傳因子</p>
+        <p>請點選圖片，得到遺傳因子</p>
         <h2>第一子代</h2>
         <div>
             <img src="https://imgur.com/O2neqrm.png" alt="綠色豌豆豆莢" class="pea-image" onclick="randomFactor(this, 'page2-factor')">
