@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孟德爾的豌豆遺傳實驗</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .pea-image {
+            width: 200px;
+            cursor: pointer;
+            margin: 10px;
+            border: 2px solid black;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1">
+        <h1>孟德爾的豌豆遺傳實驗</h1>
+        <p>請點選圖片，獲取遺傳因子</p>
+        <h2>純品系親代</h2>
+        <div>
+            <img src="https://imgur.com/O2neqrm.png" alt="綠色豌豆豆莢" class="pea-image" onclick="selectFactor('G', this, 'page1-factor')">
+            <img src="https://imgur.com/COJ4bGT.png" alt="黃色豌豆豆莢" class="pea-image" onclick="selectFactor('g', this, 'page1-factor')">
+        </div>
+        <h3>遺傳因子：</h3>
+        <p id="page1-factor"></p>
+        <button class="button" id="page1-next" onclick="goToPage2()" disabled>進行下一步實驗</button>
+        <p id="page1-message"></p>
+    </div>
+
+    <div id="page2" style="display: none;">
+        <h1>孟德爾的豌豆遺傳實驗</h1>
+        <p>請點選圖片，獲取遺傳因子</p>
+        <h2>第一子代</h2>
+        <div>
+            <img src="https://imgur.com/O2neqrm.png" alt="綠色豌豆豆莢" class="pea-image" onclick="randomFactor(this, 'page2-factor')">
+            <img src="https://imgur.com/O2neqrm.png" alt="綠色豌豆豆莢" class="pea-image" onclick="randomFactor(this, 'page2-factor')">
+        </div>
+        <h3>遺傳因子：</h3>
+        <p id="page2-factor"></p>
+        <button class="button" id="page2-next" onclick="restartGame()" disabled>完成實驗，重新進行一次</button>
+    </div>
+
+    <script>
+        let selectedFactorsPage1 = 0;
+        function selectFactor(factor, element, displayId) {
+            if (!element.dataset.selected) {
+                const display = document.getElementById(displayId);
+                display.textContent += factor + ' ';
+                element.dataset.selected = true;
+                selectedFactorsPage1++;
+            }
+            if (selectedFactorsPage1 === 2) {
+                document.getElementById('page1-next').disabled = false;
+                document.getElementById('page1-message').textContent = "你的第一子代遺傳因子組合是什麼呢?會是綠色豌豆豆莢還是黃色豌豆豆莢呢?請寫在講義上。";
+            }
+        }
+
+        function randomFactor(element, displayId) {
+            if (!element.dataset.selected) {
+                const factor = Math.random() < 0.5 ? 'G' : 'g';
+                const display = document.getElementById(displayId);
+                display.textContent += factor + ' ';
+                element.dataset.selected = true;
+                if (document.querySelectorAll(`#${displayId} ~ .pea-image[data-selected="true"]`).length === 2) {
+                    document.getElementById('page2-next').disabled = false;
+                    document.getElementById('page2').insertAdjacentHTML('beforeend', '<p>你的第二子代遺傳因子組合是什麼呢?會是綠色豌豆豆莢還是黃色豌豆豆莢呢?請寫在講義上。</p>');
+                }
+            }
+        }
+
+        function goToPage2() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
